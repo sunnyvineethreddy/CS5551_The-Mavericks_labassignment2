@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.1/angular.min.js" type="application/javascript"></script>
+</head>
+<body style="height:1500px">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">LabAssignment2</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="margin-top:50px">
+<h2>MashUp Application</h2>
+    <div class="well">In our Application we are using Two API's <br><strong>1.Google Knowledge Graph API</strong>
+        <br><strong>2.KAIROS Face Recognition API</strong><br>
+        Input for Google Knowledge API is <strong>Name of the Celebrity</strong>. It will return few details of the celebrity such as <strong>Name, URL of the image,
+        and Description</strong><br>
+        Input for Kairos Face Recognition API is <strong>Image Url</strong> taken from Knowledge API. Finally, the Kairos API will return the details
+        of the celebrity in the Image and give details like <strong>Age and Gender of that Celebrity</strong>
+
+    </div>
+    <div ng-app="app" ng-controller="myCtrl">
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="text" ng-model="mySearch" placeholder="Enter Celebrity Name">
+                <button id="btn" ng-click="findSearch()"> Show Pictures </button>
+                <button id="btn1" ng-click="findSearch()"> Show Details </button>
+                <p class="searchResults" ng-bind-html-unsafe="showresults.html"></p>
+            </div>
+            <div class="col-sm-6">
+                <p class="searchResults" ng-bind-html-unsafe="showresults1.html"></p>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+</body>
+<script>
+    angular.module('app', []).controller('myCtrl', function($scope,$http) {
+        $scope.findSearch = function(){
+            var search=$scope.mySearch;
+
+            $http.get('https://kgsearch.googleapis.com/v1/entities:search?query='+search+'&key=AIzaSyAqONT2LiHX1QcM87Ff7bbNhsDZNJLruXU&limit=1&indent=True').success(function(data){
+                console.log(data);
+                personname=data.itemListElement[0].result.name;
+                description=data.itemListElement[0].result.description;
+                console.log(description);
+                imageUrl=data.itemListElement[0].result.image.contentUrl;
+                console.log(imageUrl);
+                $scope.showresults = {
+                    html: "<br><div class=\"well\"><strong>Name:</strong>" + personname+"<br> <strong>Description:</strong>"+description+"<br><br><img src=\""+imageUrl+"\"></div>"
+                }
+                var headers = {
+                    "Content-type"    : "application/json",
+                    "app_id"          : "ef85f5a6",
+                    "app_key"         : "50ab8bb46663769f205cd446dc07abf7"
+                };
+                var payload  = { "image" : imageUrl };
+                var url = "http://api.kairos.com/detect";
+                // make request
+                $.ajax(url, {
+                    headers  : headers,
+                    type: "POST",
+                    data: JSON.stringify(payload),
+                    dataType: "text"
+                }).done(function(response){
+                    myArray = JSON.parse(response);
+                console.log(myArray.images[0].faces[0].attributes.age);
+                personAge=myArray.images[0].faces[0].attributes.age;
+                personGender=myArray.images[0].faces[0].attributes.gender.type;
+                personLips=myArray.images[0].faces[0].attributes.lips;
+                if(personGender == 'M')
+                {
+                    personGender="Male";
+                }
+                else
+                {
+                    personGender="Female";
+                }
+                console.log(personAge);
+                console.log(personGender);
+                $scope.showresults1 ={
+                    html: "<div class=\"well\"><strong>Age:</strong>"+personAge+"<br> <strong>Gender:</strong>"+personGender+"<br><strong>Lips:</strong>"+personLips+"</div>"
+
+                }
+
+                });
+
+            })
+        }
+    });
+
+</script>
+</html>

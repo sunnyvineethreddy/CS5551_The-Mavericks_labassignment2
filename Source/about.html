@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>About Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="height:1500px">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">LabAssignment2</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.html">Home</a></li>
+            <li  class="active"><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" style="margin-top:50px">
+    <h1>Smart Health <span class="glyphicon glyphicon-heart"></span></h1>
+    <hr>
+
+    <h3>Motivation</h3>
+    <div class="well">To provide information about diseases in particular area and also provide basic medicine, show them the
+    availability of medicine in the nearest pharmacy</div>
+
+    <h3>Description</h3>
+    <div class="well">Our application takes data from social networking sites based on the Posts of the users and find the locations where people are suffering from
+    diseases and also give alert to the users present in that particular location. If the users are suffering from any disease
+    our application will suggest prescribed medicines for that disease. It will show the locations of pharmacy where the medicines available.
+        <br>
+        Tasks In our Project are:<br>
+        1. Collect Data from Social Media<br>
+        2. Mark the locations where people are suffering from diseases<br>
+        3. Give alerts to the people in that location to take precautions <br>
+        4. Display the location of the pharmacy where medicine for that disease is available
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="heatmap.jpg" alt="heatMap" style="width:100%;">
+            </div>
+
+            <div class="item">
+                <img src="location.jpg" alt="Chicago" style="width:100%;">
+            </div>
+
+            <div class="item">
+                <img src="arperson.png" alt="New york" style="width:100%;">
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+
+
+</body>
+</html>
